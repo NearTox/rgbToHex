@@ -1,0 +1,36 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>rgbToHex-js</title>
+<style>
+body,html{height:100%;width:100%}
+body{background:#333;margin:0;padding:0;background-image:-webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:-ms-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-image:-o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);background-size:200px 200px;-webkit-animation:animate-stripes 200s linear 20s infinite;animation:animate-stripes 200s linear 20s infinite;}
+#container{box-shadow:0 4px 10px #1d1d1d;border:10px solid #6b6b6b;margin:0 auto -150px;background:#FFF repeat-y;width:75%;min-width:773px;min-height:100%;font:15px arial,helvetica,sans-serif;color:#333;border-left-color:#606060;border-right-color:#333;}
+input[type='range']{-webkit-appearance:none;background-color:#aaaaaa;}
+input[type='range']::-webkit-slider-thumb{-webkit-appearance:none;background-color:#2c2c2c;width:15px;height:20px;}
+form{position:relative;margin:50px}
+</style>
+<script>
+Object.prototype.rgbToHex=function(x){x=this;return (x.indexOf("rgb(")>=0)?x.replace(/(rgb[(])/ig,"#").replace(/[.\d]*[\d]%/ig , function(y){w=0; var temp=y.split("."); for(var i=0;i<temp.length; i++){var div=(i!=0)?100:1; temp[i]=parseInt(temp[i],10)/div;} for(var x=0;x<temp.length;x++){w+=temp[x];}return Math.round((255*w)/100);}).replace(/[ \d]*[\d]*[,)]/ig ,function(n){n = parseInt(n,10);if (isNaN(n)){ n="00";}n = Math.max(0,Math.min(n,255)); return "0123456789ABCDEF".charAt((n-n%16)/16)+ "0123456789ABCDEF".charAt(n%16);}):x};
+var NearTox={
+uptade:function(n,v){this.rbg[n]=parseInt(v,10);this.backgroundU();document.getElementById("hex").innerHTML=document.getElementById("result").style.backgroundColor.rgbToHex();},
+backgroundU:function(){document.getElementById("result").style.backgroundColor="rgb("+this.rbg.r+","+this.rbg.g+","+this.rbg.b+")";document.getElementById("result").style.color=this.recalc(this.rbg.r,this.rbg.b,this.rbg.g);document.getElementById("exit").innerHTML=document.getElementById("result").style.backgroundColor},
+rbg:{g: 0, b: 0, r: 0},
+recalc:function(x,y,z){var w=parseInt(x/3+y/3+z/3,10);w=255-w;return "rgb("+w+","+w+","+w+")"}
+};
+</script>
+</head>
+<body>
+<div id="container">
+<form>
+<div id="result" style="width:200px;height:200px;float: right;color: #fff;background-color: #000;"><div style="text-align: center;top: 35%;position: relative;"><h1>Result</h1></div>
+</div>
+<a>R:</a><input type="range" min="0" value="0" max="255" style="width:300px;" onchange='NearTox.uptade("r",this.value);'><br/>
+<a>G:</a><input type="range" min="0" value="0" max="255" style="width:300px;" onchange='NearTox.uptade("g",this.value);'><br/>
+<a>B:</a><input type="range" min="0" value="0" max="255" style="width:300px;" onchange='NearTox.uptade("b",this.value);'><br/>
+<h1 id="exit">rgb(0, 0, 0)</h1>
+<a>To Hex:</a>
+<h1 id="hex">#000000</h1>
+</form>
+</div>
+</body>
