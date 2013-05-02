@@ -1,4 +1,4 @@
-rgbToHex
-========
+rgbToHex-js
+===========
 
-function for convert rgb to hex || función para convertir de rgb a hexadecial
+function to convert from rgb to hex || función para convertir de rgb a hexadecial
